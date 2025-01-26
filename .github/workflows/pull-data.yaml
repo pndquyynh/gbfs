@@ -2,7 +2,9 @@ name: pull-data
 
 on:
   schedule:
-    - cron: '* * * * *''
+    # Runs every 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch: 
 
 jobs:
   get:
