@@ -1,7 +1,8 @@
-name: pull data
+name: pull-data
 
 on:
-  delete
+  schedule:
+    - cron: '* * * * *'
 
 jobs:
   get:
