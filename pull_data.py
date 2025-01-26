@@ -4,7 +4,9 @@ from requests.packages.urllib3.util.retry import Retry
 import json
 from os import makedirs
 
-makedirs('data', exist_ok=True)
+makedirs('data/info', exist_ok=True)
+makedirs('data/status', exist_ok=True)
+makedirs('data/free_bike', exist_ok=True)
 
 # copying a retry strategy from: https://www.peterbe.com/plog/best-practice-with-retries-with-requests
 def requests_retry_session(
@@ -28,15 +30,19 @@ def requests_retry_session(
 
 stations_get = requests_retry_session().get('https://gbfs.lyft.com/gbfs/2.3/dca-cabi/en/station_information.json')
 status_get = requests_retry_session().get('https://gbfs.lyft.com/gbfs/2.3/dca-cabi/en/station_status.json')
+free_bike_get = requests_retry_session().get('https://gbfs.lyft.com/gbfs/2.3/dca-cabi/en/free_bike_status.json')
 
-status_get.raise_for_status() # should raise error and end execution if there was a connection error
+status_get.raise_for_status()  # should raise error and end execution if there was a connection error
 
-status_json = status_get.json() # should raise error if the json is unparsable 
+status_json = status_get.json()  # should raise error if the json is unparsable 
 
 timestamp = status_json['last_updated']
 
-with open(f"data/{timestamp}_stations.json", 'w') as stations_file:
+with open(f"data/info/{timestamp}_stations.json", 'w') as stations_file:
     json.dump(stations_get.json(), stations_file)
 
-with open(f"data/{timestamp}_status.json", 'w') as status_file:
+with open(f"data/status/{timestamp}_status.json", 'w') as status_file:
     json.dump(status_json, status_file)
+
+with open(f"data/free_bike/{timestamp}_free_bike_status.json", 'w') as free_bike_file:
+    json.dump(free_bike_get.json(), free_bike_file)  # Corrected indentation here
