@@ -3,7 +3,7 @@ name: pull-data
 on:
   schedule:
     # Runs every 5 minutes
-    - cron: '*/5 * * * *'
+    - cron: '* * * * *'
   # workflow_dispatch: 
 
 jobs:
