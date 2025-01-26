@@ -4,7 +4,11 @@ on:
   schedule:
     # Runs every 5 minutes
     - cron: '*/5 * * * *'
+<<<<<<< HEAD
   workflow_dispatch: 
+=======
+    - workflow_dispatch: 
+>>>>>>> 7f78e18d14097027dace949e3c59c916829da816
 
 jobs:
   get:
